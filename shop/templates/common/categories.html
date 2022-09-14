@@ -1,0 +1,46 @@
+<h2>Category</h2>
+<div class="panel-group category-products" id="accordian">
+    <!--category-productsr-->
+    {% for category in categories %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                {% if category.category_set.exists %}
+                    <a data-toggle="collapse" data-parent="#accordian" href="#category-{{category.id}}">
+                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                        {{ category.name }}
+                    </a>
+                {% else %}
+                    <a href="#category-{{category.id}}">
+                        {{ category.name }}
+                    </a>
+                {% endif %}
+
+            </h4>
+        </div>
+        {% if category.category_set.exists %}
+        <div id="category-{{category.id}}" class="panel-collapse {%if category.name == category_display.category_parent.name %} in {%else%} collapse {%endif%}}">
+            <div class="panel-body">
+                <ul>
+                    {% for category_child in category.category_set.all %}
+                        <li class="{% if category_child.name == category_display.name %} filtered {% endif %}" ><a href="?category={{category_child.name}}">{{category_child.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <!-- <div id="sportswear" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li><a href="#">Nike </a></li>
+                    <li><a href="#">Under Armour </a></li>
+                    <li><a href="#">Adidas </a></li>
+                    <li><a href="#">Puma</a></li>
+                    <li><a href="#">ASICS </a></li>
+                </ul>
+            </div>
+        </div> -->
+    </div>
+    {% endfor %}
+</div>
+<!--/category-products-->

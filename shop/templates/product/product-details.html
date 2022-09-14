@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Product Details
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+{% load humanize %}
+{% load custom_filter %}
+<div class="container">
+	<div class="col-sm-12">
+		<div class="product-details">
+			<!--product-details-->
+			<div class="col-sm-5">
+				<div class="view-product">
+					<img src="{{product_data.image}}" alt="" />
+					<h3>ZOOM</h3>
+				</div>
+			</div>
+			<div class="col-sm-7">
+				<div class="product-information">
+					<!--/product-information-->
+					<img src="{% static 'images/product-details/new.jpg' %}" class="newarrival" alt="" />
+					<h2>{{product_data.name}}</h2>
+					<p>Web ID: 10897720{{produst_data.id}}</p>
+					<img src="{% static 'images/product-details/rating.png' %} " alt="" />
+					<br>
+					<span>
+						<span>
+							{% if product_data.id|check_product_sale %}
+							<h6 style="text-decoration: line-through; color: lightsteelblue;">
+								{{product_data.price|intcomma}}đ</h6>
+							{{product_data.id|get_price_sale|intcomma}}đ
+							<!-- {{product.price|intcomma}}đ -->
+							{% else %}
+							{{product_data.price|intcomma}}đ
+							{% endif %}
+						</span>
+						<label>Quantity:</label>
+						<input type="text" value="3" />
+						<button type="button" class="btn btn-fefault cart">
+							<i class="fa fa-shopping-cart"></i>
+							Add to cart
+						</button>
+					</span>
+					<p><b>Availability:</b> In Stock</p>
+					<p><b>Condition:</b> New</p>
+					<p><b>Brand:</b> {{product_data.brand.name}}</p>
+					<a href=""><img src="{% static 'images/product-details/share.png'%}" class="share img-responsive"
+							alt="" /></a>
+				</div>
+				<!--/product-information-->
+			</div>
+			<div class="col-sm-12">
+				<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						{% for product_image in product_data.productimage_set.all  %}
+							<li data-target="#slider-carousel" data-slide-to="{{forloop.counter0}}" {% if forloop.counter0 == 0 %} class="active" {% endif %}></li>
+						{% endfor %}
+					</ol>
+
+					<div class="carousel-inner">
+						{% for product_image in product_data.productimage_set.all  %}
+							<div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
+								<div class="col-sm-6">
+									<h1>{{product_data.name}}</h1>
+									<!-- <h2>Free E-Commerce Template</h2> -->
+									<p>{{product_data.detail}}</p>
+									<!-- <button type="button" class="btn btn-default get">Get it
+										now</button> -->
+								</div>
+								<div class="col-sm-6">
+									<img src="{{ product_image.path }}"
+										class="girl img-responsive" alt="" />
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					<a href="#slider-carousel" class="left control-carousel hidden-xs"
+						data-slide="prev">
+						<i class="fa fa-angle-left"></i>
+					</a>
+					<a href="#slider-carousel" class="right control-carousel hidden-xs"
+						data-slide="next">
+						<i class="fa fa-angle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!--/product-details-->
+	</div>
+</div>
+{% endblock content %}

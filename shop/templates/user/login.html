@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Đăng nhập
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<section id="form">
+	<!--form-->
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+				<div class="login-form">
+					<!--login form-->
+					<h2>Đăng nhập tài khoản</h2>
+					{% if message %}
+					<h6 style="color: red;">{{message}}</h6>
+					{% endif %}
+					<form action="" method="POST">
+						{% csrf_token %}
+						{% for field in formlogin %}
+						{{ field.label }}
+						{{ field }}
+						{% endfor %}
+						<span>
+							<input type="checkbox" class="checkbox">
+							Keep me signed in
+						</span>
+						<button type="submit" class="btn btn-default">Đăng nhập</button><br>
+						<a href="{% url 'register_user' %}">Chưa có tài khoản!</a>
+					</form>
+				</div>
+				<!--/login form-->
+			</div>
+			<!-- <div class="col-sm-1">
+				<h2 class="or">OR</h2>
+			</div> -->
+			<!--sign up form-->
+			<!-- <div class="col-sm-4">
+				<div class="signup-form">
+					<h2>New User Signup!</h2>
+					<form action="" method="POST">
+						{% csrf_token %}
+						{% for field in form_register %}
+						<div class="form-group">
+							{{ field.label }}
+							{{ field }}
+							{% if field.errors %}
+							{% for error in field.errors %}
+							<div style="display: block" class="invalid-feedback">
+								{{error}}
+							</div>
+							{% endfor %}
+							{% endif %}
+						</div>
+						{% endfor %}
+						<input type="text" placeholder="Name" />
+						<input type="email" placeholder="Email Address" />
+						<input type="password" placeholder="Password" />
+						<button type="submit" class="btn btn-default">Signup</button>
+					</form>
+				</div>
+			</div> -->
+			<!--/sign up form-->
+		</div>
+	</div>
+</section>
+<!--/form-->
+
+{% endblock content %}
